@@ -65,11 +65,17 @@ app.post("/compose", function (req, res) {
 //Routing using parameters
 app.get("/posts/:postName", function(req, res){
 
-  let requestedTitle = _.lowerCase(requestedTitle)
+  let requestedTitle = _.lowerCase(req.params.postName);
 
   posts.forEach(function(post) {
     if (requestedTitle == _.lowerCase(post.title)) {
-      console.log("Matched!")
+      res.render("post", {
+        postTitle: post.title,
+        postContent: post.content
+      });
+    } else {
+      console.log("Something went wrong");
+      console.log(post.title);
     }
   });
 });
